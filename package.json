@@ -1,0 +1,25 @@
+{
+  "name": "mask",
+  "version": "1.0.0",
+  "description": "Provide a mask functionality in Drupal",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
+    "babel-loader": "^8.0.5",
+    "glob": "^7.1.4",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0",
+    "webpack-glob-entry": "^2.1.1"
+  },
+  "dependencies": {
+    "imask": "^5.1.6",
+    "jquery-mask-plugin": "^1.14.15"
+  }
+}

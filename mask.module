@@ -1,0 +1,39 @@
+<?php
+
+/**
+ * @file
+ * Module file for mask.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function mask_theme() {
+  return [
+    'mask' => [
+      'render element' => 'element',
+    ],
+  ];
+}
+
+/**
+ * Prepares variables for mask templates.
+ *
+ * Default template: mask.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - element: An associative array containing the properties of the element.
+ *     Properties used: #children, #attributes.
+ */
+function template_preprocess_mask(&$variables) {
+  $element = $variables['element'];
+  $variables['attributes'] = [];
+  if (isset($element['#id'])) {
+    $variables['attributes']['id'] = $element['#id'];
+  }
+  if (isset($element['#attributes']['title'])) {
+    $variables['attributes']['title'] = $element['#attributes']['title'];
+  }
+  $variables['children'] = $element['#children'];
+}

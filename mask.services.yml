@@ -1,0 +1,17 @@
+services:
+
+  # Factory
+  mask.mask_definition_factory:
+    class: Drupal\mask\Factory\MaskDefinitionFactory
+    arguments: []
+  mask.mask_factory:
+    class: Drupal\mask\Factory\MaskFactory
+    arguments: ['@plugin.manager.mask_definition']
+
+  # Plugin managers
+  plugin.manager.mask_definition:
+    class: Drupal\mask\Plugin\Mask\MaskDefinitionManager
+    parent: default_plugin_manager
+  plugin.manager.mask:
+    class: Drupal\mask\Plugin\Mask\MaskManager
+    parent: default_plugin_manager

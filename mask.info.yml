@@ -1,0 +1,6 @@
+name: Mask
+type: module
+description: Provide mask plugins and fields.
+core: 8.x
+package: Mask
+version: 8.x-1.0

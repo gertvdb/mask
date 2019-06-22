@@ -1,0 +1,9 @@
+mask:
+  js:
+    js/mask.es6.js: {}
+    js/maskBehavior.es6.js: {}
+  dependencies:
+    - core/jquery
+    - core/jquery.once
+    - core/drupal
+    - core/drupalSettings
