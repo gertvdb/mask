@@ -9,22 +9,22 @@ use Drupal\Core\Render\Annotation\FormElement;
 use Drupal\Core\Render\Element\CompositeFormElementTrait;
 
 /**
- * Provides a masked form input element.
- *
- * Properties:
- * -
+ * Provides a masked form input element by plugin.
  *
  * Example usage:
  * @code
  * $form['mask'] = array(
- *   '#type' => 'mask',
  *   '#title' => $this->t('Mask'),
+ *   '#type' => 'mask_by_plugin',
+ *   '#plugin_id' => 'my_mask_plugin',
+ *   '#plugin_config' => [],
+ *   '#settings' => [],
  * );
  * @end
  *
- * @FormElement("mask")
+ * @FormElement("mask_by_plugin")
  */
-class Mask extends FormElementBase {
+class MaskByPlugin extends FormElementBase {
 
   use CompositeFormElementTrait;
 
@@ -42,7 +42,8 @@ class Mask extends FormElementBase {
         [$class, 'preRenderCompositeFormElement'],
       ],
       '#theme_wrappers' => ['mask'],
-      '#mask' => FALSE,
+      '#plugin_id' => FALSE,
+      '#plugin_config' => [],
       '#settings' => [],
     ];
   }
@@ -52,50 +53,53 @@ class Mask extends FormElementBase {
    *
    * @return string
    */
-  protected static function generateUniqueIdentifier() {
+  private static function generateUniqueIdentifier() {
     $uuidService = \Drupal::service('uuid');
     return $uuidService->generate();
   }
 
   /**
-   * Get the mask to apply.
+   * Generate a unique identifier.
    *
-   * @param array $element
-   *
-   * @return \Drupal\mask\Mask|null
+   * @return \Drupal\mask\Mask
    */
-  protected static function getMask(array $element) {
+  private static function getMask($element) {
 
-    // Make sure a mask is set.
-    $mask = $element['#mask'];
-    if ($mask instanceof \Drupal\mask\Mask) {
-      return $mask;
+    /** @var \Drupal\mask\Plugin\Mask\MaskManagerInterface $maskManager */
+    $maskManager = \Drupal::service('plugin.manager.mask');
+
+    try {
+      /** @var \Drupal\mask\Plugin\Mask\Mask\MaskPluginInterface $mask */
+      $maskInstance = $maskManager->createInstance($element['#plugin_id']);
+
+      /** @var \Drupal\mask\Mask $mask */
+      return $maskInstance->toMask();
+
+    } catch (\Exception $exception) {
+      kint($exception);
+      return NULL;
     }
-
-    return NULL;
   }
 
   /**
-   * Process Mask element.
-   *
    * @param $element
    *
    * @return mixed
+   * @throws \Drupal\Component\Plugin\Exception\PluginException
    */
   public static function processMask($element) {
-
     $element['#tree'] = TRUE;
 
     // Prepare element for JS functionality.
     $uuid = self::generateUniqueIdentifier();
     $mask = self::getMask($element);
+
     if (!$mask) {
       return $element;
     }
 
     $element['#attributes']['data-uuid'] = $uuid;
     $element['#attributes']['data-class'] = 'js--mask';
-
 
     // Apply all mask definitions.
     $definitions = [];

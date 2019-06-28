@@ -99,7 +99,7 @@ class MaskDefinitionManager extends DefaultPluginManager implements MaskDefiniti
   private function guardAgainstDuplicateCharacter($character, $characterList) {
     if (in_array($character, $characterList)) {
       throw new \LogicException(sprintf(
-        'Expected $character to be unique, got duplicate for: "%s". If you want to override an existing plugin use hook_mask_mask_definition_info_alter.',
+        'Expected $character to be unique, got duplicate for: "%s". If you want to override an existing plugin use hook_mask_mask_definition_info_alter although it is probably better to provide a new plugin.',
         $character
       ));
     }

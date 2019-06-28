@@ -31,15 +31,7 @@ interface MaskDefinitionPluginInterface extends PluginInspectionInterface {
    * @return string
    *   The Js pattern.
    */
-  public function getPatternJs();
-
-  /**
-   * The Php pattern.
-   *
-   * @return string
-   *   The Php pattern.
-   */
-  public function getPatternPhp();
+  public function getPattern();
 
   /**
    * The mask definition object.

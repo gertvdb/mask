@@ -69,22 +69,15 @@ abstract class MaskDefinitionPluginBase extends PluginBase implements MaskDefini
   /**
    * {@inheritdoc}
    */
-  public function getPatternJs() {
-    return $this->getPluginDefinition()['patternJs'];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getPatternPhp() {
-    return $this->getPluginDefinition()['patternPhp'];
+  public function getPattern() {
+    return $this->getPluginDefinition()['pattern'];
   }
 
   /**
    * {@inheritdoc}
    */
   public function toMaskDefinition() {
-    return $this->maskDefinitionFactory->createMaskDefinition($this->getCharacter(), $this->getPatternJs(), $this->getPatternPhp());
+    return $this->maskDefinitionFactory->createMaskDefinition($this->getCharacter(), $this->getPattern());
   }
 
 }

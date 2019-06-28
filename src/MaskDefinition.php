@@ -18,24 +18,17 @@ class MaskDefinition implements MaskDefinitionInterface {
   /**
    * {inheritdoc}
    */
-  protected $patternJs;
-
-  /**
-   * {inheritdoc}
-   */
-  protected $patternPhp;
+  protected $pattern;
 
   /**
    * MaskDefinition constructor.
    *
    * @param $character
-   * @param $patternJs
-   * @param $patternPhp
+   * @param $pattern
    */
-  public function __construct($character, $patternJs, $patternPhp) {
+  public function __construct($character, $pattern) {
     $this->character = $character;
-    $this->patternJs = $patternJs;
-    $this->patternPhp = $patternPhp;
+    $this->pattern = $pattern;
   }
 
   /**
@@ -48,15 +41,8 @@ class MaskDefinition implements MaskDefinitionInterface {
   /**
    * {inheritdoc}
    */
-  public function getPatternPhp() {
-    return $this->patternPhp;
-  }
-
-  /**
-   * {inheritdoc}
-   */
-  public function getPatternJs() {
-    return $this->patternJs;
+  public function getPattern() {
+    return $this->pattern;
   }
 
 }

@@ -6,7 +6,10 @@ services:
     arguments: []
   mask.mask_factory:
     class: Drupal\mask\Factory\MaskFactory
-    arguments: ['@plugin.manager.mask_definition']
+    arguments: ['@plugin.manager.mask', '@plugin.manager.mask_definition']
+  mask.masked_value_factory:
+    class: Drupal\mask\Factory\MaskedValueFactory
+    arguments: ['@plugin.manager.mask']
 
   # Plugin managers
   plugin.manager.mask_definition:

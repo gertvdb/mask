@@ -43,7 +43,6 @@ class MaskManager extends DefaultPluginManager implements MaskManagerInterface {
     }
   }
 
-
   /**
    * {@inheritdoc}
    */
@@ -67,4 +66,21 @@ class MaskManager extends DefaultPluginManager implements MaskManagerInterface {
     return $masks;
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function createInstanceByMask($mask) {
+    $maskDefinitions = $this->getDefinitions();
+    foreach ($maskDefinitions as $pluginId => $pluginConfig) {
+
+      /** @var \Drupal\mask\Plugin\Mask\Mask\MaskPluginInterface $maskInstance */
+      $maskInstance = $this->createInstance($pluginId, $pluginConfig);
+
+      if ($maskInstance->getMask() === $mask) {
+        return $maskInstance;
+      }
+    }
+
+    return NULL;
+  }
 }

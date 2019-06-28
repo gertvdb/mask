@@ -15,17 +15,10 @@ interface MaskDefinitionInterface {
   public function getCharacter();
 
   /**
-   * Getter for pattern php
+   * Getter for pattern
    *
    * @return string
    */
-  public function getPatternPhp();
-
-  /**
-   * Getter for pattern js
-   *
-   * @return string
-   */
-  public function getPatternJs();
+  public function getPattern();
 
 }

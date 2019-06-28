@@ -38,17 +38,10 @@ class MaskDefinition extends Plugin {
   public $character;
 
   /**
-   * The preg match for php.
+   * The preg match.
    *
    * @var string
    */
-  public $patternPhp;
-
-  /**
-   * The preg match for js.
-   *
-   * @var string
-   */
-  public $patternJs;
+  public $pattern;
 
 }

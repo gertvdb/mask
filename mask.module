@@ -13,6 +13,9 @@ function mask_theme() {
     'mask' => [
       'render element' => 'element',
     ],
+    'mask_by_plugin' => [
+      'render element' => 'element',
+    ],
   ];
 }
 
@@ -27,6 +30,28 @@ function mask_theme() {
  *     Properties used: #children, #attributes.
  */
 function template_preprocess_mask(&$variables) {
+  $element = $variables['element'];
+  $variables['attributes'] = [];
+  if (isset($element['#id'])) {
+    $variables['attributes']['id'] = $element['#id'];
+  }
+  if (isset($element['#attributes']['title'])) {
+    $variables['attributes']['title'] = $element['#attributes']['title'];
+  }
+  $variables['children'] = $element['#children'];
+}
+
+/**
+ * Prepares variables for mask templates.
+ *
+ * Default template: mask-by-plugin.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - element: An associative array containing the properties of the element.
+ *     Properties used: #children, #attributes.
+ */
+function template_preprocess_mask_by_plugin(&$variables) {
   $element = $variables['element'];
   $variables['attributes'] = [];
   if (isset($element['#id'])) {

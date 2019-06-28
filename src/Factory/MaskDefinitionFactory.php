@@ -12,11 +12,10 @@ class MaskDefinitionFactory {
   /**
    * {@inheritdoc}
    */
-  public function createMaskDefinition($character, $patternJs, $patternPhp) {
+  public function createMaskDefinition($character, $pattern) {
     return new MaskDefinition(
       $character,
-      $patternJs,
-      $patternPhp
+      $pattern
     );
   }
 
