@@ -29,7 +29,7 @@ function mask_theme() {
  *   - element: An associative array containing the properties of the element.
  *     Properties used: #children, #attributes.
  */
-function template_preprocess_mask(&$variables) {
+function template_preprocess_mask(array &$variables) {
   $element = $variables['element'];
   $variables['attributes'] = [];
   if (isset($element['#id'])) {
@@ -51,7 +51,7 @@ function template_preprocess_mask(&$variables) {
  *   - element: An associative array containing the properties of the element.
  *     Properties used: #children, #attributes.
  */
-function template_preprocess_mask_by_plugin(&$variables) {
+function template_preprocess_mask_by_plugin(array &$variables) {
   $element = $variables['element'];
   $variables['attributes'] = [];
   if (isset($element['#id'])) {

@@ -21,13 +21,12 @@ use Drupal\Core\Field\WidgetBase;
  */
 class MaskFieldWidget extends WidgetBase {
 
-
   /**
    * {@inheritdoc}
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $formState) {
 
-    /** @var \Drupal\mask\Plugin\Field\FieldType\MaskFieldItem $item */
+    /** @var \Drupal\mask\Plugin\Field\FieldType\MaskFieldItemInterface $item */
     $item = $items[$delta];
 
     /** @var \Drupal\mask\MaskInterface|null $value */
@@ -37,6 +36,7 @@ class MaskFieldWidget extends WidgetBase {
     $fieldDefinitions = $item->getFieldDefinition();
     $provider = $fieldDefinitions->getSetting('provider');
 
+    // @TODO : Finish field.
     $element['value'] = [
       '#title' => $this->t('Mask'),
       '#type' => 'textfield',
@@ -51,7 +51,7 @@ class MaskFieldWidget extends WidgetBase {
   public function massageFormValues(array $values, array $form, FormStateInterface $formState) {
     $newValues = [];
     foreach ($values as $delta => $value) {
-        $newValues[$delta] = $value;
+      $newValues[$delta] = $value;
     }
     return $newValues;
   }

@@ -11,7 +11,6 @@ use Drupal\Core\Extension\ModuleHandlerInterface;
  */
 class MaskDefinitionManager extends DefaultPluginManager implements MaskDefinitionManagerInterface {
 
-
   /**
    * Constructs a new MaskDefinitionManager object.
    *
@@ -29,7 +28,6 @@ class MaskDefinitionManager extends DefaultPluginManager implements MaskDefiniti
     $this->alterInfo('mask_mask_definition_info');
     $this->setCacheBackend($cache_backend, 'mask_mask_definition_plugins');
   }
-
 
   /**
    * {@inheritdoc}
@@ -68,7 +66,9 @@ class MaskDefinitionManager extends DefaultPluginManager implements MaskDefiniti
         if ($maskDefinitionInstance->getCharacter() === $character) {
           return $maskDefinitionInstance;
         }
-      } catch (\Exception $exception) {}
+      } catch (\Exception $exception) {
+        // Return NULL on exception.
+      }
     }
 
     return NULL;
@@ -85,7 +85,7 @@ class MaskDefinitionManager extends DefaultPluginManager implements MaskDefiniti
       ));
     }
 
-    if(preg_match("/[A-Za-z0-9*]+/", $character) == FALSE){
+    if (preg_match("/[A-Za-z0-9*]+/", $character) == FALSE) {
       throw new \LogicException(sprintf(
         'Expected $character to be an alphanumeric character, got : "%s"',
         $character
@@ -131,8 +131,9 @@ class MaskDefinitionManager extends DefaultPluginManager implements MaskDefiniti
 
         $countries[] = $country;
       } catch (\Exception $exception) {
-        kint($exception);
+        // Return empty array on exception.
       }
+
     }
 
     return $countries;

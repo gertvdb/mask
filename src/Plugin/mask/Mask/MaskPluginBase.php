@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Base class for Mask plugins.
  */
-abstract class MaskPluginBase extends PluginBase implements MaskPluginInterface , ContainerFactoryPluginInterface {
+abstract class MaskPluginBase extends PluginBase implements MaskPluginInterface, ContainerFactoryPluginInterface {
 
   /**
    * The mask factory.
@@ -41,7 +41,7 @@ abstract class MaskPluginBase extends PluginBase implements MaskPluginInterface 
    */
   public static function create(ContainerInterface $container, array $configuration, $pluginId, $pluginDefinition) {
 
-    /** @var MaskFactory $maskFactory */
+    /** @var \Drupal\mask\Factory\MaskFactory $maskFactory */
     $maskFactory = $container->get('mask.mask_factory');
 
     return new static(

@@ -52,6 +52,7 @@ class MaskByPlugin extends FormElementBase {
    * Generate a unique identifier.
    *
    * @return string
+   *   A unique identifier.
    */
   private static function generateUniqueIdentifier() {
     $uuidService = \Drupal::service('uuid');
@@ -59,11 +60,15 @@ class MaskByPlugin extends FormElementBase {
   }
 
   /**
-   * Generate a unique identifier.
+   * Get the mask.
    *
-   * @return \Drupal\mask\Mask
+   * @param array $element
+   *   The form element.
+   *
+   * @return \Drupal\mask\Mask|null
+   *   The mask to apply.
    */
-  private static function getMask($element) {
+  private static function getMask(array $element) {
 
     /** @var \Drupal\mask\Plugin\Mask\MaskManagerInterface $maskManager */
     $maskManager = \Drupal::service('plugin.manager.mask');
@@ -76,18 +81,21 @@ class MaskByPlugin extends FormElementBase {
       return $maskInstance->toMask();
 
     } catch (\Exception $exception) {
-      kint($exception);
       return NULL;
     }
+
   }
 
   /**
-   * @param $element
+   * Process the mask field.
    *
-   * @return mixed
-   * @throws \Drupal\Component\Plugin\Exception\PluginException
+   * @param array $element
+   *   The form element.
+   *
+   * @return array
+   *   The form element.
    */
-  public static function processMask($element) {
+  public static function processMask(array $element) {
     $element['#tree'] = TRUE;
 
     // Prepare element for JS functionality.
@@ -104,7 +112,7 @@ class MaskByPlugin extends FormElementBase {
     // Apply all mask definitions.
     $definitions = [];
     /** @var \Drupal\mask\MaskDefinition $definition */
-    foreach($mask->getDefinitions() as $definition) {
+    foreach ($mask->getDefinitions() as $definition) {
       $definitions[(string) $definition->getCharacter()] = $definition->getPattern();
     };
 
@@ -122,7 +130,13 @@ class MaskByPlugin extends FormElementBase {
       ],
     ];
 
-    Element::setAttributes( $element['masked'], ['id', 'name', 'value', 'size', 'placeholder']);
+    Element::setAttributes($element['masked'], [
+      'id',
+      'name',
+      'value',
+      'size',
+      'placeholder'
+    ]);
 
     $element['unmasked'] = [
       '#type' => 'hidden',

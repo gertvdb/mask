@@ -7,6 +7,7 @@ use Drupal\Core\Render\Element;
 use Drupal\Core\Render\Element\FormElement as FormElementBase;
 use Drupal\Core\Render\Annotation\FormElement;
 use Drupal\Core\Render\Element\CompositeFormElementTrait;
+use Drupal\mask\Mask as MaskObject;
 
 /**
  * Provides a masked form input element.
@@ -51,6 +52,7 @@ class Mask extends FormElementBase {
    * Generate a unique identifier.
    *
    * @return string
+   *   A unique identifier.
    */
   protected static function generateUniqueIdentifier() {
     $uuidService = \Drupal::service('uuid');
@@ -58,17 +60,19 @@ class Mask extends FormElementBase {
   }
 
   /**
-   * Get the mask to apply.
+   * Get the mask.
    *
    * @param array $element
+   *   The form element.
    *
    * @return \Drupal\mask\Mask|null
+   *   The mask to apply.
    */
   protected static function getMask(array $element) {
 
     // Make sure a mask is set.
     $mask = $element['#mask'];
-    if ($mask instanceof \Drupal\mask\Mask) {
+    if ($mask instanceof MaskObject) {
       return $mask;
     }
 
@@ -76,11 +80,13 @@ class Mask extends FormElementBase {
   }
 
   /**
-   * Process Mask element.
+   * Process the mask field.
    *
-   * @param $element
+   * @param array $element
+   *   The form element.
    *
-   * @return mixed
+   * @return array
+   *   The form element.
    */
   public static function processMask($element) {
 
@@ -118,7 +124,13 @@ class Mask extends FormElementBase {
       ],
     ];
 
-    Element::setAttributes( $element['masked'], ['id', 'name', 'value', 'size', 'placeholder']);
+    Element::setAttributes($element['masked'], [
+      'id',
+      'name',
+      'value',
+      'size',
+      'placeholder'
+    ]);
 
     $element['unmasked'] = [
       '#type' => 'hidden',

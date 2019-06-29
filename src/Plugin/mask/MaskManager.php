@@ -11,7 +11,6 @@ use Drupal\Core\Extension\ModuleHandlerInterface;
  */
 class MaskManager extends DefaultPluginManager implements MaskManagerInterface {
 
-
   /**
    * Constructs a new MaskManager object.
    *
@@ -41,6 +40,7 @@ class MaskManager extends DefaultPluginManager implements MaskManagerInterface {
     } catch (\Exception $exception) {
       return NULL;
     }
+
   }
 
   /**
@@ -60,7 +60,9 @@ class MaskManager extends DefaultPluginManager implements MaskManagerInterface {
 
         $masks[] = $mask;
       } catch (\Exception $exception) {
+        // Return empty array on exception.
       }
+
     }
 
     return $masks;
@@ -73,14 +75,21 @@ class MaskManager extends DefaultPluginManager implements MaskManagerInterface {
     $maskDefinitions = $this->getDefinitions();
     foreach ($maskDefinitions as $pluginId => $pluginConfig) {
 
-      /** @var \Drupal\mask\Plugin\Mask\Mask\MaskPluginInterface $maskInstance */
-      $maskInstance = $this->createInstance($pluginId, $pluginConfig);
+      try {
+        /** @var \Drupal\mask\Plugin\Mask\Mask\MaskPluginInterface $maskInstance */
+        $maskInstance = $this->createInstance($pluginId, $pluginConfig);
+
+      } catch (\Exception $exception) {
+        continue;
+      }
 
       if ($maskInstance->getMask() === $mask) {
         return $maskInstance;
       }
+
     }
 
     return NULL;
   }
+
 }
