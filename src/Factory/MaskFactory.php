@@ -3,8 +3,8 @@
 namespace Drupal\mask\Factory;
 
 use Drupal\mask\Mask;
-use Drupal\mask\Plugin\Mask\MaskDefinitionManager;
-use Drupal\mask\Plugin\Mask\MaskManager;
+use Drupal\mask\Plugin\Mask\MaskDefinitionManagerInterface;
+use Drupal\mask\Plugin\Mask\MaskManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -24,19 +24,19 @@ class MaskFactory {
    *
    * @var \Drupal\mask\Plugin\Mask\MaskDefinitionManager
    */
-  protected $maskDefinitionManager;
+  protected $maskDefManager;
 
   /**
-   * Mask factory
+   * Mask factory.
    *
-   * @var \Drupal\mask\Plugin\Mask\MaskManager $maskManager
+   * @var \Drupal\mask\Plugin\Mask\MaskManagerInterface $maskManager
    *   The mask definition manager.
-   * @var \Drupal\mask\Plugin\Mask\MaskDefinitionManager $maskDefinitionManager
+   * @var \Drupal\mask\Plugin\Mask\MaskDefinitionManagerInterface $maskDefManager
    *   The mask definition manager.
    */
-  public function __construct(MaskManager $maskManager, MaskDefinitionManager $maskDefinitionManager) {
+  public function __construct(MaskManagerInterface $maskManager, MaskDefinitionManagerInterface $maskDefManager) {
     $this->maskManager = $maskManager;
-    $this->maskDefinitionManager = $maskDefinitionManager;
+    $this->maskDefManager = $maskDefManager;
   }
 
   /**
@@ -44,15 +44,15 @@ class MaskFactory {
    */
   public static function create(ContainerInterface $container) {
 
-    /** @var MaskManager $maskManager */
+    /** @var \Drupal\mask\Plugin\Mask\MaskManagerInterface $maskManager */
     $maskManager = $container->get('plugin.manager.mask');
 
-    /** @var MaskDefinitionManager $maskDefinitionManager */
-    $maskDefinitionManager = $container->get('plugin.manager.mask_definition');
+    /** @var \Drupal\mask\Plugin\Mask\MaskDefinitionManagerInterface $maskDefManager */
+    $maskDefManager = $container->get('plugin.manager.mask_definition');
 
     return new static(
       $maskManager,
-      $maskDefinitionManager
+      $maskDefManager
     );
   }
 
@@ -62,7 +62,7 @@ class MaskFactory {
   public function createMask($mask) {
     return new Mask(
       $mask,
-      $this->maskDefinitionManager->getMaskDefinitions()
+      $this->maskDefManager->getMaskDefinitions()
     );
   }
 
@@ -73,23 +73,7 @@ class MaskFactory {
     $mask = $this->maskManager->getMask($pluginId);
     return new Mask(
       $mask->getMask(),
-      $this->maskDefinitionManager->getMaskDefinitions()
-    );
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function createFromFormElement($element) {
-
-    $element['alpha2'];
-    $element['masked'];
-    $element['unmasked'];
-
-    $mask = $this->maskManager->getMask($pluginId);
-    return new Mask(
-      $mask->getMask(),
-      $this->maskDefinitionManager->getMaskDefinitions()
+      $this->maskDefManager->getMaskDefinitions()
     );
   }
 

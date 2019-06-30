@@ -17,16 +17,16 @@ class MaskManager extends DefaultPluginManager implements MaskManagerInterface {
    * @param \Traversable $namespaces
    *   An object that implements \Traversable which contains the root paths
    *   keyed by the corresponding namespace to look for plugin implementations.
-   * @param \Drupal\Core\Cache\CacheBackendInterface $cache_backend
+   * @param \Drupal\Core\Cache\CacheBackendInterface $cacheBackend
    *   Cache backend instance to use.
-   * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
+   * @param \Drupal\Core\Extension\ModuleHandlerInterface $moduleHandler
    *   The module handler to invoke the alter hook with.
    */
-  public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler) {
-    parent::__construct('Plugin/mask/Mask', $namespaces, $module_handler, 'Drupal\mask\Plugin\Mask\Mask\MaskPluginInterface', 'Drupal\mask\Annotation\Mask');
+  public function __construct(\Traversable $namespaces, CacheBackendInterface $cacheBackend, ModuleHandlerInterface $moduleHandler) {
+    parent::__construct('Plugin/mask/Mask', $namespaces, $moduleHandler, 'Drupal\mask\Plugin\Mask\Mask\MaskPluginInterface', 'Drupal\mask\Annotation\Mask');
 
     $this->alterInfo('mask_definition_info');
-    $this->setCacheBackend($cache_backend, 'mask_definition_plugins');
+    $this->setCacheBackend($cacheBackend, 'mask_definition_plugins');
   }
 
   /**
@@ -34,10 +34,11 @@ class MaskManager extends DefaultPluginManager implements MaskManagerInterface {
    */
   public function getMask($pluginId, array $configuration = []) {
     try {
-      /** @var \Drupal\mask\Plugin\Mask\Mask\MaskPluginInterface $maskDefinitionInstance */
-      $maskDefinitionInstance = $this->createInstance($pluginId, $configuration);
-      return $maskDefinitionInstance ? $maskDefinitionInstance->toMask() : NULL;
-    } catch (\Exception $exception) {
+      /** @var \Drupal\mask\Plugin\Mask\Mask\MaskPluginInterface $maskDefInstance */
+      $maskDefInstance = $this->createInstance($pluginId, $configuration);
+      return $maskDefInstance ? $maskDefInstance->toMask() : NULL;
+    }
+    catch (\Exception $exception) {
       return NULL;
     }
 
@@ -59,7 +60,8 @@ class MaskManager extends DefaultPluginManager implements MaskManagerInterface {
         $mask = $maskInstance->toMask();
 
         $masks[] = $mask;
-      } catch (\Exception $exception) {
+      }
+      catch (\Exception $exception) {
         // Return empty array on exception.
       }
 
@@ -79,7 +81,8 @@ class MaskManager extends DefaultPluginManager implements MaskManagerInterface {
         /** @var \Drupal\mask\Plugin\Mask\Mask\MaskPluginInterface $maskInstance */
         $maskInstance = $this->createInstance($pluginId, $pluginConfig);
 
-      } catch (\Exception $exception) {
+      }
+      catch (\Exception $exception) {
         continue;
       }
 

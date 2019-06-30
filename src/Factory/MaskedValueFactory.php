@@ -3,7 +3,8 @@
 namespace Drupal\mask\Factory;
 
 use Drupal\mask\MaskedValue;
-use Drupal\mask\Plugin\Mask\MaskManager;
+use Drupal\mask\MaskInterface;
+use Drupal\mask\Plugin\Mask\MaskManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -14,17 +15,17 @@ class MaskedValueFactory {
   /**
    * The mask plugin manager.
    *
-   * @var \Drupal\mask\Plugin\Mask\MaskManager
+   * @var \Drupal\mask\Plugin\Mask\MaskManagerInterface
    */
   protected $maskManager;
 
   /**
-   * Mask factory
+   * Mask factory.
    *
-   * @var \Drupal\mask\Plugin\Mask\MaskManager $maskManager
+   * @var \Drupal\mask\Plugin\Mask\MaskManagerInterface $maskManager
    *   The mask definition manager.
    */
-  public function __construct(MaskManager $maskManager) {
+  public function __construct(MaskManagerInterface $maskManager) {
     $this->maskManager = $maskManager;
   }
 
@@ -33,7 +34,7 @@ class MaskedValueFactory {
    */
   public static function create(ContainerInterface $container) {
 
-    /** @var MaskManager $maskManager */
+    /** @var \Drupal\mask\Plugin\Mask\MaskManagerInterface $maskManager */
     $maskManager = $container->get('plugin.manager.mask');
 
     return new static(
@@ -42,9 +43,19 @@ class MaskedValueFactory {
   }
 
   /**
-   * {@inheritdoc}
+   * Create a masked value.
+   *
+   * @param string $masked
+   *   The masked value.
+   * @param string $unmasked
+   *   The unmasked value.
+   * @param \Drupal\mask\MaskInterface $mask
+   *   The mask applied.
+   *
+   * @return \Drupal\mask\MaskedValue
+   *   The masked value object.
    */
-  public function createMaskedValue($masked, $unmasked, $mask) {
+  public function createMaskedValue($masked, $unmasked, MaskInterface $mask) {
     $maskInstance = $this->maskManager->createInstanceByMask($mask);
 
     return new MaskedValue(
@@ -55,9 +66,15 @@ class MaskedValueFactory {
   }
 
   /**
-   * {@inheritdoc}
+   * Create a masked value from array.
+   *
+   * @param array $array
+   *   The keyed array.
+   *
+   * @return \Drupal\mask\MaskedValue
+   *   The masked value object.
    */
-  public function createMaskedValueFromArray($array) {
+  public function createMaskedValueFromArray(array $array) {
     return $this->createMaskedValue($array['masked'], $array['unmasked'], $array['mask']);
   }
 

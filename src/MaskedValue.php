@@ -3,24 +3,30 @@
 namespace Drupal\mask;
 
 /**
- * Class Mask
+ * Class Mask.
  *
  * @package Drupal\mask
  */
 class MaskedValue implements MaskedValueInterface {
 
   /**
-   * @var string The masked value
+   * The masked value.
+   *
+   * @var string
    */
   protected $value;
 
   /**
-   * @var string The unmasked value
+   * The unmasked value.
+   *
+   * @var string
    */
   protected $unmaskedValue;
 
   /**
-   * @var \Drupal\mask\MaskInterface The applied mask
+   * The applied mask.
+   *
+   * @var \Drupal\mask\MaskInterface
    */
   protected $mask;
 
@@ -34,28 +40,37 @@ class MaskedValue implements MaskedValueInterface {
    * @param \Drupal\mask\MaskInterface $mask
    *   The applied mask.
    */
-  public function __construct($value, $unmaskedValue, $mask) {
+  public function __construct($value, $unmaskedValue, MaskInterface $mask) {
     $this->value = $value;
     $this->unmaskedValue = $unmaskedValue;
     $this->mask = $mask;
   }
 
   /**
-   * {inheritdoc}
+   * Get the unmasked value.
+   *
+   * @return string
+   *   The value without the mask applied.
    */
   public function getUnmaskedValue() {
     return $this->unmaskedValue;
   }
 
   /**
-   * {inheritdoc}
+   * The masked value.
+   *
+   * @return string
+   *   The value with the mask applied.
    */
   public function getValue() {
     return $this->value;
   }
 
   /**
-   * {inheritdoc}
+   * The mask.
+   *
+   * @return \Drupal\mask\MaskInterface
+   *   The mask.
    */
   public function getMask() {
     return $this->mask;

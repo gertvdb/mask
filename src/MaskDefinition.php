@@ -3,28 +3,33 @@
 namespace Drupal\mask;
 
 /**
- * Class MaskDefinition
+ * Class MaskDefinition.
  *
  * @package Drupal\mask
  */
 class MaskDefinition implements MaskDefinitionInterface {
 
   /**
-   * {inheritdoc}
+   * The character.
+   *
+   * @var string
    */
   protected $character;
 
-
   /**
-   * {inheritdoc}
+   * The replacement pattern.
+   *
+   * @var string
    */
   protected $pattern;
 
   /**
    * MaskDefinition constructor.
    *
-   * @param $character
-   * @param $pattern
+   * @param string $character
+   *   The character.
+   * @param string $pattern
+   *   The replacement pattern.
    */
   public function __construct($character, $pattern) {
     $this->character = $character;
@@ -32,14 +37,20 @@ class MaskDefinition implements MaskDefinitionInterface {
   }
 
   /**
-   * {inheritdoc}
+   * Getter for character code.
+   *
+   * @return string
+   *   The replacement character.
    */
   public function getCharacter() {
     return $this->character;
   }
 
   /**
-   * {inheritdoc}
+   * Getter for pattern.
+   *
+   * @return string
+   *   The pattern to apply to the character.
    */
   public function getPattern() {
     return $this->pattern;

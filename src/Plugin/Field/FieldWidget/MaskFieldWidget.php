@@ -26,16 +26,6 @@ class MaskFieldWidget extends WidgetBase {
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $formState) {
 
-    /** @var \Drupal\mask\Plugin\Field\FieldType\MaskFieldItemInterface $item */
-    $item = $items[$delta];
-
-    /** @var \Drupal\mask\MaskInterface|null $value */
-    $value = $item->toMask();
-
-    // Get settings.
-    $fieldDefinitions = $item->getFieldDefinition();
-    $provider = $fieldDefinitions->getSetting('provider');
-
     // @TODO : Finish field.
     $element['value'] = [
       '#title' => $this->t('Mask'),

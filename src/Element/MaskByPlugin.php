@@ -80,7 +80,8 @@ class MaskByPlugin extends FormElementBase {
       /** @var \Drupal\mask\Mask $mask */
       return $maskInstance->toMask();
 
-    } catch (\Exception $exception) {
+    }
+    catch (\Exception $exception) {
       return NULL;
     }
 

@@ -88,7 +88,7 @@ class Mask extends FormElementBase {
    * @return array
    *   The form element.
    */
-  public static function processMask($element) {
+  public static function processMask(array $element) {
 
     $element['#tree'] = TRUE;
 
@@ -102,11 +102,10 @@ class Mask extends FormElementBase {
     $element['#attributes']['data-uuid'] = $uuid;
     $element['#attributes']['data-class'] = 'js--mask';
 
-
     // Apply all mask definitions.
     $definitions = [];
     /** @var \Drupal\mask\MaskDefinition $definition */
-    foreach($mask->getDefinitions() as $definition) {
+    foreach ($mask->getDefinitions() as $definition) {
       $definitions[(string) $definition->getCharacter()] = $definition->getPattern();
     };
 
@@ -129,7 +128,7 @@ class Mask extends FormElementBase {
       'name',
       'value',
       'size',
-      'placeholder'
+      'placeholder',
     ]);
 
     $element['unmasked'] = [

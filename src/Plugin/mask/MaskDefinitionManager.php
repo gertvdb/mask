@@ -17,16 +17,16 @@ class MaskDefinitionManager extends DefaultPluginManager implements MaskDefiniti
    * @param \Traversable $namespaces
    *   An object that implements \Traversable which contains the root paths
    *   keyed by the corresponding namespace to look for plugin implementations.
-   * @param \Drupal\Core\Cache\CacheBackendInterface $cache_backend
+   * @param \Drupal\Core\Cache\CacheBackendInterface $cacheBackend
    *   Cache backend instance to use.
-   * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
+   * @param \Drupal\Core\Extension\ModuleHandlerInterface $moduleHandler
    *   The module handler to invoke the alter hook with.
    */
-  public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler) {
-    parent::__construct('Plugin/mask/MaskDefinition', $namespaces, $module_handler, 'Drupal\mask\Plugin\Mask\MaskDefinition\MaskDefinitionPluginInterface', 'Drupal\mask\Annotation\MaskDefinition');
+  public function __construct(\Traversable $namespaces, CacheBackendInterface $cacheBackend, ModuleHandlerInterface $moduleHandler) {
+    parent::__construct('Plugin/mask/MaskDefinition', $namespaces, $moduleHandler, 'Drupal\mask\Plugin\Mask\MaskDefinition\MaskDefinitionPluginInterface', 'Drupal\mask\Annotation\MaskDefinition');
 
     $this->alterInfo('mask_mask_definition_info');
-    $this->setCacheBackend($cache_backend, 'mask_mask_definition_plugins');
+    $this->setCacheBackend($cacheBackend, 'mask_mask_definition_plugins');
   }
 
   /**
@@ -60,15 +60,17 @@ class MaskDefinitionManager extends DefaultPluginManager implements MaskDefiniti
     foreach ($countryDefinitions as $pluginId => $pluginConfig) {
       try {
 
-        /** @var \Drupal\mask\Plugin\Mask\MaskDefinitionInterface $maskDefinitionInstance */
-        $maskDefinitionInstance = $this->createInstance($pluginId, $pluginConfig);
+        /** @var \Drupal\mask\Plugin\Mask\MaskDefinitionManagerInterface $maskDefInstance */
+        $maskDefInstance = $this->createInstance($pluginId, $pluginConfig);
 
-        if ($maskDefinitionInstance->getCharacter() === $character) {
-          return $maskDefinitionInstance;
+        if ($maskDefInstance->getCharacter() === $character) {
+          return $maskDefInstance;
         }
-      } catch (\Exception $exception) {
+      }
+      catch (\Exception $exception) {
         // Return NULL on exception.
       }
+
     }
 
     return NULL;
@@ -109,9 +111,9 @@ class MaskDefinitionManager extends DefaultPluginManager implements MaskDefiniti
    * {@inheritdoc}
    */
   public function getMaskDefinition($character) {
-    /** @var \Drupal\mask\Plugin\Mask\MaskDefinition\MaskDefinitionPluginInterface $maskDefinitionInstance */
-    $maskDefinitionInstance = $this->createInstanceByCharacter($character);
-    return $maskDefinitionInstance ? $maskDefinitionInstance->toMaskDefinition() : NULL;
+    /** @var \Drupal\mask\Plugin\Mask\MaskDefinition\MaskDefinitionPluginInterface $maskDefInstance */
+    $maskDefInstance = $this->createInstanceByCharacter($character);
+    return $maskDefInstance ? $maskDefInstance->toMaskDefinition() : NULL;
   }
 
   /**
@@ -123,14 +125,15 @@ class MaskDefinitionManager extends DefaultPluginManager implements MaskDefiniti
     foreach ($maskDefinitions as $pluginId => $pluginConfig) {
       try {
 
-        /** @var \Drupal\mask\Plugin\Mask\MaskDefinition\MaskDefinitionPluginInterface $maskDefinitionInstance */
-        $maskDefinitionInstance = $this->createInstance($pluginId, $pluginConfig);
+        /** @var \Drupal\mask\Plugin\Mask\MaskDefinition\MaskDefinitionPluginInterface $maskDefInstance */
+        $maskDefInstance = $this->createInstance($pluginId, $pluginConfig);
 
         /** @var \Drupal\mask\MaskDefinitionInterface $country */
-        $country = $maskDefinitionInstance->toMaskDefinition();
+        $country = $maskDefInstance->toMaskDefinition();
 
         $countries[] = $country;
-      } catch (\Exception $exception) {
+      }
+      catch (\Exception $exception) {
         // Return empty array on exception.
       }
 

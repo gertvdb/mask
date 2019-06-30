@@ -3,27 +3,33 @@
 namespace Drupal\mask;
 
 /**
- * Class Mask
+ * Class Mask.
  *
  * @package Drupal\mask
  */
 class Mask implements MaskInterface {
 
   /**
-   * {inheritdoc}
+   * The mask definitions.
+   *
+   * @var array|\Drupal\mask\MaskDefinition[]
    */
   protected $definitions;
 
   /**
-   * {inheritdoc}
+   * The mask.
+   *
+   * @var string
    */
   protected $mask;
 
   /**
    * Mask constructor.
    *
-   * @param $mask
+   * @param string $mask
+   *   The mask.
    * @param \Drupal\mask\MaskDefinition[] $definitions
+   *   The mask definitions.
    */
   public function __construct($mask, array $definitions) {
     $this->mask = $mask;
@@ -31,22 +37,23 @@ class Mask implements MaskInterface {
   }
 
   /**
-   * Getter for Definitions
+   * Get the definitions for the mask.
    *
-   * @return \Drupal\mask\MaskDefinition[]
+   * @return \Drupal\mask\MaskDefinitionInterface[]
+   *   A list of mask definitions.
    */
   public function getDefinitions() {
     return $this->definitions;
   }
 
   /**
-   * Getter for Mask
+   * The mask to apply.
    *
    * @return string
+   *   The mask to apply.
    */
   public function getMask() {
     return $this->mask;
   }
-
 
 }

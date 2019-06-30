@@ -17,7 +17,7 @@ abstract class MaskDefinitionPluginBase extends PluginBase implements MaskDefini
    *
    * @var \Drupal\mask\Factory\MaskDefinitionFactory
    */
-  protected $maskDefinitionFactory;
+  protected $maskDefFactory;
 
   /**
    * Constructor.
@@ -28,12 +28,12 @@ abstract class MaskDefinitionPluginBase extends PluginBase implements MaskDefini
    *   The plugin id for the plugin instance.
    * @param mixed $pluginDefinition
    *   The plugin implementation definition.
-   * @param \Drupal\mask\Factory\MaskDefinitionFactory $maskDefinitionFactory
+   * @param \Drupal\mask\Factory\MaskDefinitionFactory $maskDefFactory
    *   The country factory.
    */
-  public function __construct(array $configuration, $pluginId, $pluginDefinition, MaskDefinitionFactory $maskDefinitionFactory) {
+  public function __construct(array $configuration, $pluginId, $pluginDefinition, MaskDefinitionFactory $maskDefFactory) {
     parent::__construct($configuration, $pluginId, $pluginDefinition);
-    $this->maskDefinitionFactory = $maskDefinitionFactory;
+    $this->maskDefFactory = $maskDefFactory;
   }
 
   /**
@@ -41,14 +41,14 @@ abstract class MaskDefinitionPluginBase extends PluginBase implements MaskDefini
    */
   public static function create(ContainerInterface $container, array $configuration, $pluginId, $pluginDefinition) {
 
-    /** @var \Drupal\mask\Factory\MaskDefinitionFactory $maskDefinitionFactory */
-    $maskDefinitionFactory = $container->get('mask.mask_definition_factory');
+    /** @var \Drupal\mask\Factory\MaskDefinitionFactory $maskDefFactory */
+    $maskDefFactory = $container->get('mask.mask_definition_factory');
 
     return new static(
       $configuration,
       $pluginId,
       $pluginDefinition,
-      $maskDefinitionFactory
+      $maskDefFactory
     );
   }
 
@@ -77,7 +77,7 @@ abstract class MaskDefinitionPluginBase extends PluginBase implements MaskDefini
    * {@inheritdoc}
    */
   public function toMaskDefinition() {
-    return $this->maskDefinitionFactory->createMaskDefinition($this->getCharacter(), $this->getPattern());
+    return $this->maskDefFactory->createMaskDefinition($this->getCharacter(), $this->getPattern());
   }
 
 }
