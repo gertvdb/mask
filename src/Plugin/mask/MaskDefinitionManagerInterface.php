@@ -25,8 +25,8 @@ interface MaskDefinitionManagerInterface extends PluginManagerInterface, CachedD
   /**
    * Create list of all continents.
    *
-   * @return \Drupal\iso3166\ContinentInterface[]
-   *   An array of continent objects.
+   * @return \Drupal\mask\MaskDefinitionInterface[]
+   *   An array of mask definition objects.
    */
   public function getMaskDefinitions();
 

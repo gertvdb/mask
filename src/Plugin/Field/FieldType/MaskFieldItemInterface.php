@@ -7,16 +7,16 @@ use Drupal\Core\Field\FieldItemInterface;
 /**
  * Interface MaskFieldItemInterface.
  *
- * @package Drupal\iso3166\Plugin\Field\FieldType
+ * @package Drupal\mask\Plugin\Field\FieldType
  */
 interface MaskFieldItemInterface extends FieldItemInterface {
 
   /**
-   * Get a mask object.
+   * Get a masked value object.
    *
-   * @return \Drupal\mask\MaskInterface|null
+   * @return \Drupal\mask\MaskedValueInterface|null
    *   The mask object.
    */
-  public function toMask();
+  public function toMaskedValue();
 
 }

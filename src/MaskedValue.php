@@ -14,7 +14,7 @@ class MaskedValue implements MaskedValueInterface {
    *
    * @var string
    */
-  protected $value;
+  protected $maskedValue;
 
   /**
    * The unmasked value.
@@ -33,15 +33,15 @@ class MaskedValue implements MaskedValueInterface {
   /**
    * Masked value.
    *
-   * @param string $value
+   * @param string $maskedValue
    *   The masked value.
    * @param string $unmaskedValue
    *   The unmasked value.
    * @param \Drupal\mask\MaskInterface $mask
    *   The applied mask.
    */
-  public function __construct($value, $unmaskedValue, MaskInterface $mask) {
-    $this->value = $value;
+  public function __construct($maskedValue, $unmaskedValue, MaskInterface $mask) {
+    $this->maskedValue = $maskedValue;
     $this->unmaskedValue = $unmaskedValue;
     $this->mask = $mask;
   }
@@ -62,8 +62,8 @@ class MaskedValue implements MaskedValueInterface {
    * @return string
    *   The value with the mask applied.
    */
-  public function getValue() {
-    return $this->value;
+  public function getMaskedValue() {
+    return $this->maskedValue;
   }
 
   /**
@@ -74,6 +74,17 @@ class MaskedValue implements MaskedValueInterface {
    */
   public function getMask() {
     return $this->mask;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function toArray() {
+    return [
+      'masked_value' => $this->getMaskedValue(),
+      'unmasked_value' => $this->getUnmaskedValue(),
+      'mask' => $this->getMask()->getMask(),
+    ];
   }
 
 }

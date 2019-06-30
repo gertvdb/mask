@@ -21,7 +21,7 @@ interface MaskedValueInterface {
    * @return string
    *   The value with the mask applied.
    */
-  public function getValue();
+  public function getMaskedValue();
 
   /**
    * The mask.
@@ -30,5 +30,13 @@ interface MaskedValueInterface {
    *   The mask.
    */
   public function getMask();
+
+  /**
+   * Get the object data as an array.
+   *
+   * @return array
+   *   The object data as an array.
+   */
+  public function toArray();
 
 }

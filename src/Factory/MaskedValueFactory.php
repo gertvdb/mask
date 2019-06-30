@@ -54,9 +54,21 @@ class MaskedValueFactory {
    *
    * @return \Drupal\mask\MaskedValue
    *   The masked value object.
+   *
+   * @throws \Exception
    */
   public function createMaskedValue($masked, $unmasked, MaskInterface $mask) {
-    $maskInstance = $this->maskManager->createInstanceByMask($mask);
+
+    try {
+      $maskInstance = $this->maskManager->createInstanceByMask($mask->getMask());
+    }
+    catch (\Exception $exception) {
+      throw new \Exception('Provided mask not found');
+    }
+
+    if (!$maskInstance) {
+      throw new \Exception('Provided mask not found');
+    }
 
     return new MaskedValue(
       $masked,

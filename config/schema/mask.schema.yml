@@ -1,0 +1,7 @@
+field.storage_settings.mask:
+  type: mapping
+  label: 'Mask field storage settings'
+  mapping:
+    provider:
+      type: string
+      label: 'Provider'

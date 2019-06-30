@@ -28,7 +28,7 @@ class MaskFieldFormatter extends FormatterBase {
 
     /* @var \Drupal\mask\Plugin\Field\FieldType\MaskFieldItemInterface $item */
     foreach ($items as $delta => $item) {
-      $mask = $item->toMask();
+      $mask = $item->toMaskedValue();
       if ($mask) {
 
         $elements[$delta] = [
