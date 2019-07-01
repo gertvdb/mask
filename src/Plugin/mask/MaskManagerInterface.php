@@ -25,7 +25,7 @@ interface MaskManagerInterface extends PluginManagerInterface, CachedDiscoveryIn
   /**
    * Get a mask plugin.
    *
-   * @param $pluginId
+   * @param string $pluginId
    *   The plugin id.
    * @param array $configuration
    *   The plugin configuration.
