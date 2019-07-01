@@ -85,6 +85,8 @@ class MaskedValueFactory {
    *
    * @return \Drupal\mask\MaskedValue
    *   The masked value object.
+   *
+   * @throws \Exception
    */
   public function createMaskedValueFromArray(array $array) {
     return $this->createMaskedValue($array['masked'], $array['unmasked'], $array['mask']);

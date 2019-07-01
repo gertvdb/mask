@@ -11,4 +11,33 @@ use Drupal\Component\Plugin\PluginManagerInterface;
  */
 interface MaskManagerInterface extends PluginManagerInterface, CachedDiscoveryInterface, CacheableDependencyInterface {
 
+  /**
+   * Create an instance by mask.
+   *
+   * @param string $mask
+   *   The mask
+   *
+   * @return \Drupal\mask\Plugin\Mask\Mask\MaskPluginInterface
+   */
+  public function createInstanceByMask($mask);
+
+  /**
+   * Get a mask plugin.
+   *
+   * @param $pluginId
+   *   The plugin id.
+   * @param array $configuration
+   *   The plugin configuration.
+   *
+   * @return \Drupal\mask\Mask|null
+   */
+  public function getMask($pluginId, array $configuration = []);
+
+  /**
+   * Get all masks.
+   *
+   * @return \Drupal\mask\Mask[]
+   */
+  public function getMasks();
+
 }

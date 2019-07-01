@@ -99,6 +99,8 @@ class Mask extends FormElementBase {
       return $element;
     }
 
+    $defaultValue = isset($element['#default_value']) ? $element['#default_value'] : FALSE;
+
     $element['#attributes']['data-uuid'] = $uuid;
     $element['#attributes']['data-class'] = 'js--mask';
 
@@ -115,15 +117,16 @@ class Mask extends FormElementBase {
     $element['#attached']['library'][] = 'mask/mask';
     $element['#attached']['drupalSettings']['maskSettings'][$uuid] = Json::encode($settings);
 
-    $element['masked'] = [
+    $element['masked_value'] = [
       '#type' => 'textfield',
       '#theme' => 'input__mask',
       '#attributes' => [
         'data-class' => ['js--mask--masked'],
       ],
+      '#default_value' => $defaultValue ? $defaultValue['masked_value'] : FALSE,
     ];
 
-    Element::setAttributes($element['masked'], [
+    Element::setAttributes($element['masked_value'], [
       'id',
       'name',
       'value',
@@ -131,16 +134,18 @@ class Mask extends FormElementBase {
       'placeholder',
     ]);
 
-    $element['unmasked'] = [
+    $element['unmasked_value'] = [
       '#type' => 'hidden',
       '#attributes' => [
         'data-class' => ['js--mask--unmasked'],
       ],
+      '#default_value' => $defaultValue ? $defaultValue['unmasked_value'] : FALSE,
     ];
 
     $element['mask'] = [
       '#type' => 'hidden',
       '#value' => $mask->getMask(),
+      '#default_value' => $defaultValue ? $defaultValue['mask'] : FALSE,
     ];
 
     return $element;

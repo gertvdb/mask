@@ -70,7 +70,7 @@ class MaskFieldWidget extends WidgetBase {
       '#title' => $this->t('Mask'),
       '#type' => 'mask_by_plugin',
       '#plugin_id' => $provider,
-      '#default_value' => $value ? $value->getMaskedValue() : FALSE,
+      '#default_value' => $value ? $value->toArray() : FALSE,
       '#settings' => [],
     ];
 

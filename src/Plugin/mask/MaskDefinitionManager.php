@@ -60,7 +60,7 @@ class MaskDefinitionManager extends DefaultPluginManager implements MaskDefiniti
     foreach ($countryDefinitions as $pluginId => $pluginConfig) {
       try {
 
-        /** @var \Drupal\mask\Plugin\Mask\MaskDefinitionManagerInterface $maskDefInstance */
+        /** @var \Drupal\mask\Plugin\Mask\MaskDefinition\MaskDefinitionPluginInterface $maskDefInstance */
         $maskDefInstance = $this->createInstance($pluginId, $pluginConfig);
 
         if ($maskDefInstance->getCharacter() === $character) {

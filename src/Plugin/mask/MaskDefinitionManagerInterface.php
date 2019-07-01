@@ -17,7 +17,7 @@ interface MaskDefinitionManagerInterface extends PluginManagerInterface, CachedD
    * @param string $character
    *   The character code.
    *
-   * @return \Drupal\mask\Plugin\Mask\MaskDefinitionInterface|null
+   * @return \Drupal\mask\Plugin\Mask\MaskDefinition\MaskDefinitionPluginInterface|null
    *   A plugin instance.
    */
   public function createInstanceByCharacter($character);
