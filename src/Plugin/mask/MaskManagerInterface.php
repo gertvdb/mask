@@ -15,9 +15,10 @@ interface MaskManagerInterface extends PluginManagerInterface, CachedDiscoveryIn
    * Create an instance by mask.
    *
    * @param string $mask
-   *   The mask
+   *   The mask.
    *
    * @return \Drupal\mask\Plugin\Mask\Mask\MaskPluginInterface
+   *   The mask plugin.
    */
   public function createInstanceByMask($mask);
 
@@ -30,6 +31,7 @@ interface MaskManagerInterface extends PluginManagerInterface, CachedDiscoveryIn
    *   The plugin configuration.
    *
    * @return \Drupal\mask\Mask|null
+   *   The mask object or null.
    */
   public function getMask($pluginId, array $configuration = []);
 
@@ -37,6 +39,7 @@ interface MaskManagerInterface extends PluginManagerInterface, CachedDiscoveryIn
    * Get all masks.
    *
    * @return \Drupal\mask\Mask[]
+   *   A array of mask objects.
    */
   public function getMasks();
 
